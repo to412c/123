@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tổ 4 - Lịch 2026</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #f6d365, #fda085);
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #8d5524, #c68642);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* Avatar */
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    object-fit: cover;
+    background: white;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* Calendar */
+.calendar {
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-header h2 {
+    margin: 0;
+}
+
+.calendar-header button {
+    background: #8d5524;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.calendar-header button:hover {
+    background: #6f3f1d;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.day-name {
+    text-align: center;
+    font-weight: bold;
+    color: #8d5524;
+}
+
+.day {
+    text-align: center;
+    padding: 12px 0;
+    border-radius: 10px;
+    background: #f7f7f7;
+    transition: 0.2s;
+}
+
+.day:hover {
+    background: #fde2c6;
+}
+
+.empty {
+    background: transparent;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- Header / Profile -->
+    <div class="header">
+        <!-- Avatar ngựa -->
+        <img class="avatar"
+             src="https://upload.wikimedia.org/wikipedia/commons/7/70/Horse_head.jpg"
+             alt="Ngựa 2026">
+
+        <div>
+            <h1>🐎 TỔ 4</h1>
+            <p>Linh vật năm 2026 – Năm Con Ngựa</p>
+            <p>Đoàn kết • Năng động • Bứt phá</p>
+        </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="calendar">
+        <div class="calendar-header">
+            <button onclick="prevMonth()">◀</button>
+            <h2 id="monthYear"></h2>
+            <button onclick="nextMonth()">▶</button>
+        </div>
+
+        <div class="calendar-grid" id="calendar"></div>
+    </div>
+
+</div>
+
+<script>
+const year = 2026;
+let currentMonth = 0;
+
+const days = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+const months = [
+    "Tháng 1","Tháng 2","Tháng 3","Tháng 4",
+    "Tháng 5","Tháng 6","Tháng 7","Tháng 8",
+    "Tháng 9","Tháng 10","Tháng 11","Tháng 12"
+];
+
+function renderCalendar() {
+    const cal = document.getElementById("calendar");
+    cal.innerHTML = "";
+
+    document.getElementById("monthYear").innerText =
+        months[currentMonth] + " - " + year;
+
+    days.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "day-name";
+        div.innerText = d;
+        cal.appendChild(div);
+    });
+
+    const firstDay = new Date(year, currentMonth, 1).getDay();
+    const totalDays = new Date(year, currentMonth + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        cal.appendChild(empty);
+    }
+
+    for (let d = 1; d <= totalDays; d++) {
+        const day = document.createElement("div");
+        day.className = "day";
+        day.innerText = d;
+        cal.appendChild(day);
+    }
+}
+
+function prevMonth() {
+    if (currentMonth > 0) {
+        currentMonth--;
+        renderCalendar();
+    }
+}
+
+function nextMonth() {
+    if (currentMonth < 11) {
+        currentMonth++;
+        renderCalendar();
+    }
+}
+
+renderCalendar();
+</script>
+
+</body>
+</html>
